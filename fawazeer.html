@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>لعبة الفوازير – فريقين</title>
+
+<style>
+    body {
+        font-family: "Tahoma", sans-serif;
+        background: linear-gradient(#dfe9f3, #ffffff);
+        text-align: center;
+        padding: 40px;
+    }
+    .box {
+        background: white;
+        padding: 25px;
+        border-radius: 15px;
+        width: 420px;
+        margin: auto;
+        box-shadow: 0 0 15px #bbb;
+    }
+    button {
+        padding: 12px 20px;
+        margin: 10px;
+        border: none;
+        background: #0078ff;
+        color: white;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    button:hover {
+        background: #005fcc;
+    }
+    .score {
+        font-size: 18px;
+        margin-top: 15px;
+        font-weight: bold;
+        color: #333;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="box">
+    <h2>لعبة الفوازير – فريقين</h2>
+
+    <label>اختر مستوى الصعوبة:</label><br>
+    <select id="level" style="padding:8px; margin:10px;">
+        <option value="easy">سهل</option>
+        <option value="medium">متوسط</option>
+        <option value="hard">صعب</option>
+    </select>
+
+    <p id="question">اضغط "فزورة جديدة" للبدء</p>
+
+    <button onclick="newRiddle()">فزورة جديدة</button>
+    <button onclick="showAnswer()">إظهار الإجابة</button>
+
+    <p id="answer" style="margin-top:20px; font-weight:bold; color:#444;"></p>
+
+    <hr>
+
+    <h3>النقاط</h3>
+    <p class="score">فريق A: <span id="scoreA">0</span></p>
+    <p class="score">فريق B: <span id="scoreB">0</span></p>
+
+    <button onclick="addPoint('A')">+ نقطة لفريق A</button>
+    <button onclick="addPoint('B')">+ نقطة لفريق B</button>
+
+</div>
+
+<script>
+    let currentAnswer = "";
+
+    const riddles = {
+        easy: [
+            {q: "شيء يمشي بلا قدمين؟", a: "الوقت"},
+            {q: "شيء اسمه على لونه؟", a: "البيضة"},
+            {q: "شيء كلما أخذت منه كبر؟", a: "الحفرة"}
+        ],
+        medium: [
+            {q: "شيء إذا تركته عاد؟", a: "الصدى"},
+            {q: "شيء يكتب ولا يقرأ؟", a: "القلم"},
+            {q: "شيء له أسنان ولا يعض؟", a: "المشط"}
+        ],
+        hard: [
+            {q: "ما هو الشيء الذي لا يمشي إلا بالضرب؟", a: "المسمار"},
+            {q: "ما هو الشيء الذي يتكلم جميع لغات العالم؟", a: "الصدى"},
+            {q: "ما هو الشيء الذي إذا دخل الماء لا يبتل؟", a: "الضوء"}
+        ]
+    };
+
+    function newRiddle() {
+        let level = document.getElementById("level").value;
+        let list = riddles[level];
+        let r = list[Math.floor(Math.random() * list.length)];
+
+        document.getElementById("question").innerText = r.q;
+        document.getElementById("answer").innerText = "";
+        currentAnswer = r.a;
+    }
+
+    function showAnswer() {
+        document.getElementById("answer").innerText = "الإجابة: " + currentAnswer;
+    }
+
+    function addPoint(team) {
+        let scoreElement = document.getElementById("score" + team);
+        let score = parseInt(scoreElement.innerText);
+        score++;
+        scoreElement.innerText = score;
+    }
+</script>
+
+</body>
+</html>
